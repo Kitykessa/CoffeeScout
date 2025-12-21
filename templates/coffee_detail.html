@@ -1,0 +1,213 @@
+{% extends "layout.html" %}
+{% block title %}{{ coffee['name'] }}{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coffee_detail.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="coffee-page py-5">
+  <div class="coffee-detail container">
+
+    <!-- Coffee info -->
+    <div class="row align-items-center mb-4">
+      <div class="col-md-5 text-center mb-4 mb-md-0">
+        <img src="{{ url_for('static', filename='coffee_pics/' ~ coffee['id'] ~ '.jpg') }}"
+             alt="{{ coffee['name'] }}"
+             class="img-fluid coffee-image shadow-sm rounded">
+      </div>
+
+      <div class="col-md-7">
+        <h2 class="mb-3 coffee-name">{{ coffee['name'] }}</h2>
+
+        <!-- Stars from review -->
+        <div class="stars mb-3">
+          {% set rating = avg_rating or 0 %}
+          {% for i in range(1,6) %}
+            {% if i <= rating|round(0, 'floor') %}
+              <i class="fas fa-star text-warning"></i>
+            {% else %}
+              <i class="far fa-star text-warning"></i>
+            {% endif %}
+          {% endfor %}
+          {% if avg_rating %}
+            <span class="ms-2">({{ "%.1f"|format(avg_rating) }})</span>
+          {% else %}
+            <span class="ms-2">(no ratings yet)</span>
+          {% endif %}
+        </div>
+
+        <!-- Coffee details and description -->
+        <p><strong>Origin:</strong> {{ coffee['origin'] }}</p>
+        <p><strong>Roast:</strong> {{ coffee['roast'] }}</p>
+        <p><strong>Beans:</strong> {{ coffee['beans'] }}</p>
+        <p class="mt-3">{{ coffee['description'] }}</p>
+
+
+        <!-- Coffee stores -->
+        {% if stores %}
+        <div class="mt-4">
+          <strong>Available at:</strong>
+          <div class="store-buttons mt-2">
+            {% for s in stores %}
+              <button class="store-btn">{{ s['store'] }}</button>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+<div class="flavor-notes-card">
+  <div class="section-title">Based on user reviews</div>
+
+  <div class="card-columns">
+    <!-- Flavor profile from review -->
+    <div class="flavor-profile-section" id="flavorProfileSection"
+        data-avg='{{ avg_values|tojson|safe }}'
+        data-notes='{{ avg_notes|tojson|safe }}'>
+
+      <div class="flavor-profile-title">Flavor Profile</div>
+
+      <div class="flavor-bars">
+        {% for label in ["Aroma","Acidity","Bitterness","Body","Finish","Roast"] %}
+        <div class="flavor-bar">
+          <div class="bar-outline" id="bar-{{ label }}">
+            <div class="bar-fill"></div>
+            <span class="bar-tooltip"></span>
+          </div>
+          <div class="bar-label">{{ label }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Notes from review -->
+    <div class="avg-notes-wrapper" id="avgNotesDisplay"
+        data-notes='{{ avg_notes|tojson|safe }}'
+        data-counts='{{ note_counts|tojson|safe }}'>
+      <div class="flavor-top-label">Common Tasting Notes</div>
+      <div class="notes-buttons"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+    <!-- Review form -->
+    {% if session.user_id %}
+    <!-- Comment + Rating -->
+    <div class="review-form mb-4">
+        <h4 class="mb-3 text-dark">Leave a Comment</h4>
+
+        <form method="POST" action="{{ url_for('add_review', coffee_id=coffee['id']) }}">
+
+          <div class="mb-3">
+            <label class="form-label text-dark">Rating ⭐ (required with comment)</label>
+
+            <div class="stars rating-input">
+              {% for i in range(5,0,-1) %}
+                <input type="radio" id="comment_star{{ i }}" name="rating" value="{{ i }}">
+                <label for="comment_star{{ i }}">★</label>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <textarea name="comment" class="form-control" rows="3" placeholder="Your comment..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-dark">Submit Comment</button>
+        </form>
+    </div>
+
+
+    <!-- Notes Only -->
+    <div class="review-form mb-4">
+      <h4 class="mb-3 text-dark">Tasting Notes</h4>
+      <form method="POST" action="{{ url_for('add_review', coffee_id=coffee['id']) }}">
+        <div id="noteTags" class="mb-2">
+          {% for n in ["Chocolate", "Nutty", "Caramel", "Fruity", "Spicy"] %}
+            <button type="button" class="tag-btn">{{ n }}</button>
+          {% endfor %}
+        </div>
+        <div class="input-group mb-2">
+          <input type="text" id="custom_note" class="form-control" placeholder="Add your own note...">
+          <button type="button" id="addNoteBtn" class="btn btn-custom">+ Add</button>
+        </div>
+        <input type="hidden" name="notes" id="notes_hidden">
+        <button type="submit" class="btn btn-dark">Save Notes</button>
+      </form>
+    </div>
+
+    <!-- Flavor Profile Sliders -->
+    <div class="review-form mb-4">
+      <h4 class="mb-3 text-dark">Flavor Profile</h4>
+      <form method="POST" action="{{ url_for('add_review', coffee_id=coffee['id']) }}">
+        {% for field in ["aroma","acidity","bitterness","body","finish","roast"] %}
+        <div class="mb-3">
+          <label class="form-label">{{ field|capitalize }}</label>
+          <div class="circle-slider large">
+            {% for i in range(1,11) %}
+              <input type="radio" id="{{ field }}{{ i }}" name="{{ field }}" value="{{ i }}">
+              <label for="{{ field }}{{ i }}"></label>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+        <button id="saveFlavorBtn" type="button" class="btn btn-dark">Save Flavor Profile</button>
+      </form>
+    </div>
+
+    {% else %}
+    <p class="text-light">Please <a href="{{ url_for('login') }}">log in</a> to leave a review.</p>
+    {% endif %}
+
+    <!-- Comment displays -->
+      <div class="reviews-section mt-5">
+        <h4 class="text-light mb-3">Reviews</h4>
+
+        {% set comment_reviews = reviews | selectattr('comment') | list %}
+
+        {% if comment_reviews %}
+          {% for r in comment_reviews %}
+          <div class="review-card mb-3 p-3 rounded bg-dark text-light">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <strong>{{ r['username'] }}</strong>
+              <span>{{ r['created_at'] }}</span>
+            </div>
+
+            {% if r['rating'] %}
+            <div class="stars mb-2 small-stars">
+              {% for i in range(1,6) %}
+                {% if i <= r['rating'] %}
+                  <i class="fas fa-star text-warning"></i>
+                {% else %}
+                  <i class="far fa-star text-warning"></i>
+                {% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <p>{{ r['comment'] }}</p>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p class="text-light">No comments yet.</p>
+        {% endif %}
+      </div>
+
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jscharting.com/latest/jscharting.js"></script>
+<script src="{{ url_for('static', filename='js/coffee_detail.js') }}"></script>
+{% endblock %}

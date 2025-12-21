@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block title %}Coffees{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coffees.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="coffee-page-wrapper">
+  <div class="coffee-page">
+
+    <!-- Filter search panel -->
+    <aside class="filters">
+      <h5>Find Your Perfect Coffee</h5>
+      <form method="GET" action="{{ url_for('coffees') }}">
+
+          <!-- Search by name-->
+          <input type="text" class="form-control mb-2" name="q" placeholder="Enter coffee name..."
+                 value="{{ request.args.get('q','') }}">
+
+          <!-- Roast -->
+          <select class="form-select mb-2" name="roast">
+              <option value="">Any Roast</option>
+              {% for r in roasts %}
+                  <option value="{{ r }}" {% if request.args.get('roast') == r %}selected{% endif %}>{{ r }}</option>
+              {% endfor %}
+          </select>
+
+          <!-- Store -->
+          <select class="form-select mb-2" name="store">
+              <option value="">Any Store</option>
+              {% for s in stores %}
+                  <option value="{{ s }}" {% if request.args.get('store') == s %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+          </select>
+
+          <!-- Origin -->
+          <select class="form-select mb-2" name="origin">
+              <option value="">Any Origin</option>
+              {% for o in origins %}
+                  <option value="{{ o }}" {% if request.args.get('origin') == o %}selected{% endif %}>{{ o }}</option>
+              {% endfor %}
+          </select>
+
+          <!-- Beans -->
+          <select class="form-select mb-3" name="beans">
+              <option value="">Any Beans</option>
+              {% for b in beans_types %}
+                  <option value="{{ b }}" {% if request.args.get('beans') == b %}selected{% endif %}>{{ b }}</option>
+              {% endfor %}
+          </select>
+
+          <button type="submit" class="btn btn-custom w-100">Apply Filters</button>
+      </form>
+    </aside>
+
+    <!-- List of Beans -->
+    <section class="coffees-list">
+      <div class="coffees-header">
+          <h3>Featured Coffees</h3>
+      </div>
+
+      {% if coffees %}
+      <div class="coffee-grid">
+          {% for coffee in coffees %}
+          <a href="{{ url_for('coffee_detail', coffee_id=coffee['id']) }}" class="coffee-card">
+              <img src="{{ url_for('static', filename='coffee_pics/' ~ coffee['id'] ~ '.jpg') }}" alt="{{ coffee['name'] }}">
+              <div class="coffee-info">
+                  <h5>{{ coffee['name'] }}</h5>
+
+                  <p>
+                      <strong>Roast:</strong>
+                      <span class="badge badge-{{ coffee['roast']|lower }}">{{ coffee['roast'] }}</span>
+                  </p>
+
+                  <p>
+                      <strong>Origin:</strong>
+                      <span class="badge">{{ coffee['origin'] }}</span>
+                  </p>
+
+                  <p>
+                      <strong>Beans:</strong>
+                      <span class="badge">{{ coffee['beans'] }}</span>
+                  </p>
+
+                  <p>{{ coffee['description'] }}</p>
+              </div>
+          </a>
+          {% endfor %}
+      </div>
+      {% else %}
+          <p class="nope">No coffees found. Try different filters.</p>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}

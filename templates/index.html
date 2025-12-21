@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>WELCOME TO THE WORLD OF COFFEE BEANS</h1>
+        <p>
+            Here you can explore coffee beans found in real Irish local shops,<br>
+            read honest opinions, and share your own impressions.<br>
+            A friendly community of coffee lovers discovering new flavors together.<br>
+            Your review might help someone find their next perfect cup.
+        </p>
+
+        {% if session.get("user_id") %}
+            <a href="{{ url_for('coffees') }}" class="btn-coffee">Explore</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="btn-coffee">Sign In</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

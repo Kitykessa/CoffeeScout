@@ -1,0 +1,165 @@
+/*  ALL COFFEES PAGE*/
+
+/* Контейнер сторінки */
+.coffee-page {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 32px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* Filters */
+.coffee-page .filters {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px #00000014;
+    position: sticky;
+    top: 16px;
+    align-self: start;
+}
+
+.coffee-page .filters h5 {
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.coffee-page .btn-custom {
+    background: #6f4e37;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 10px;
+    transition: background 0.3s;
+}
+
+.coffee-page .btn-custom:hover {
+    background: #543c2b;
+}
+
+/* === Coffee list === */
+.coffee-page .coffees-list {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Title and sorting */
+.coffee-page .coffees-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.coffee-page .coffees-header h3 {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.coffee-page .sort-select {
+    max-width: 160px;
+}
+
+.nope {
+    color: #ffffff;
+}
+
+/* Grid */
+.coffee-page .coffee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+/* Cards */
+.coffee-page .coffee-card {
+    display: block;
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 3px 8px #0000001f;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.coffee-page .coffee-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 14px #00000026;
+}
+
+.coffee-page .coffee-card img {
+    width: 200px !important;
+    height: 200px !important;
+    object-fit: cover !important;
+}
+
+.coffee-page .coffee-info {
+    padding: 15px;
+}
+
+.coffee-page .coffee-info h5 {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.coffee-page .coffee-info p {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+/* === Badges === */
+.coffee-page .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 12px;
+    background: #f2f2f2;
+    border-radius: 6px;
+    margin-left: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+.coffee-page .badge-dark {
+    background: #6f4e37;
+    color: #fff;
+}
+.coffee-page .badge-medium {
+    background: #c89f7b;
+    color: #fff;
+}
+.coffee-page .badge-light {
+    background: #e6cbb4;
+    color: #333;
+}
+
+/* === Adaptive === */
+
+
+@media (max-width: 991px) {
+    .coffee-page {
+        grid-template-columns: 1fr;
+    }
+
+    .coffee-page .filters {
+        margin-bottom: 24px;
+    }
+}
+
+@media (max-width: 767px) {
+    .coffee-page .coffee-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .coffee-page .coffees-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .coffee-page .sort-select {
+        width: 100%;
+    }
+}

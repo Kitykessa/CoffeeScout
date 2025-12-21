@@ -1,0 +1,64 @@
+.edit-profile {
+  max-width: 500px;
+  margin: 32px auto;
+  padding: 32px;
+  background-color: #f4d3b5;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px #0000001a;
+  color: #3b2418;
+}
+
+.edit-profile h2 {
+  text-align: center;
+  color: #4b2e23;
+  margin-bottom: 24px;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.password-section label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.password-section input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bca18a;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.save-btn {
+  background-color: #4b2e23;
+  color: #f4d3b5;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.save-btn:hover {
+  background-color: #3a2319;
+}
+
+.cancel-btn {
+  color: #4b2e23;
+  text-decoration: none;
+  font-weight: 600;
+}

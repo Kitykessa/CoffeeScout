@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ user.username }} — Profile{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+{% endblock %}
+
+{% block body %}
+<section class="user-profile">
+  <div class="profile-header mb-4">
+    <div class="avatar">
+      <img src="{{ url_for('static', filename='img/cat_avatar.jpg') }}" alt="user avatar" class="user-avatar">
+    </div>
+    <div class="username-box">
+      <h2>{{ user.username }}</h2>
+    </div>
+  </div>
+
+  <!-- Reviews -->
+  <div class="recent-activity">
+    <h3>Recent Activity</h3>
+
+    {% set comment_reviews = reviews | selectattr('comment') | list %}
+
+    {% if comment_reviews %}
+      <div class="reviews-list">
+        {% for r in comment_reviews %}
+        <a href="{{ url_for('coffee_detail', coffee_id=r.coffee_id) }}" class="review-card-link">
+          <div class="review-card-horizontal">
+            <img src="{{ url_for('static', filename='coffee_pics/' ~ r.coffee_id ~ '.jpg') }}"
+                 alt="{{ r.coffee_name }}"
+                 class="coffee-image-100">
+            <div class="review-content">
+              <h4>{{ r.coffee_name }}</h4>
+              {% if r.rating %}
+                <p class="stars">
+                  {% for i in range(r.rating) %}★{% endfor %}
+                  {% for i in range(5 - r.rating) %}☆{% endfor %}
+                </p>
+              {% endif %}
+              <p class="comment">"{{ r.comment }}"</p>
+              <p class="date">{{ r.created_at.split(' ')[0] }}</p>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="no-activity">You haven't commented on any coffee beans yet.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,135 @@
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #3a1f0d;
+    min-height: calc(100vh - 140px);
+    padding: 32px;
+}
+
+/* Image */
+.auth-box {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    height: 600px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px #00000040;
+    background: url("/static/img/coffee_beans.jpg") center/cover no-repeat;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+/* Overlay for the form */
+.auth-overlay {
+    background: #0000008c;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #ffffff;
+    width: 50%;
+}
+
+/* Title */
+.auth-title {
+    font-size: 30px;
+    margin-bottom: 24px;
+    font-weight: 600;
+    text-align: center;
+    color: #f5e9e0;
+}
+
+/* Input */
+.auth-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    background: #ffffffe6;
+    color: #333333;
+}
+
+/* Button */
+.auth-button {
+    background: #d4c4b0;
+    color: #3a1f0d;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    width: 100%;
+    font-weight: 600;
+    box-shadow: 0 4px 8px #0000004d;
+}
+.auth-button:hover {
+    background: #ffffff;
+    color: #3a1f0d;
+}
+
+.auth-button.register {
+    background: #a9d6b1;
+    color: #2d4a2d;
+}
+.auth-button.register:hover {
+    background: #ffffff;
+    color: #2d4a2d;
+}
+
+/* Switch between login and regicter */
+.auth-switch {
+    margin-top: 16px;
+    font-size: 15px;
+    text-align: center;
+}
+.auth-switch a {
+    font-weight: 600;
+    color: #ffb37a;
+    text-decoration: none;
+}
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* Adaptive */
+@media (max-width: 768px) {
+    .auth-box {
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+    }
+
+    .auth-overlay {
+        width: 90%;
+        border-radius: 8px;
+        background: #000000a6;
+        padding: 24px;
+    }
+
+    .auth-title {
+        font-size: 22px;
+        margin-bottom: 16px;
+    }
+
+    .auth-input {
+        font-size: 15px;
+        padding: 8px;
+    }
+
+    .auth-button {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .auth-switch {
+        font-size: 12px;
+    }
+}
