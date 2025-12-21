@@ -87,3 +87,8 @@ This will create coffee.db and populate it with coffee data and sample users.
 ```bash
 flask run
 ```
+
+### 6. Open in browser:
+```bash
+http://127.0.0.1:5000/
+```
