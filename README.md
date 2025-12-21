@@ -47,8 +47,43 @@ CoffeeScout allows users not only to browse this data, but also to **rate coffee
 
 ## How to Run
 
-### Requirements
-- Python 3.10+
-- pip
+### 1. Clone or download the project
 
+If the project is on GitHub:
+```bash
+git clone https://github.com/Kitykessa/CoffeeScout.git
+cd coffeescout
+```
+Or download the project files and unzip them.
 
+### 2. Create a virtual environment (recommended)
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate   # macOS / Linux
+# .venv\Scripts\activate    # Windows
+```
+
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Prepare the database
+
+The coffee data is stored in an Excel file (coffee.xlsx).
+
+> 1. Convert Excel data to JSON:
+>```bash
+>python convert.py
+>```
+> 2. Initialize the SQLite database:
+>```bash
+>python init_db.py
+>```
+This will create coffee.db and populate it with coffee data and sample users.
+
+### 5. Run the application
+```bash
+flask run
+```
