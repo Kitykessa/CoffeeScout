@@ -81,7 +81,8 @@ The initial coffee data is stored in an Excel file (coffee.xlsx).
 >```bash
 >python init_db.py
 >```
-This will create the coffee.db file and populate it with coffee data.
+This will create the coffee.db file and populate it with the initial coffee data.
+This step only needs to be done once.
 
 ### 5. Run the application
 ```bash
