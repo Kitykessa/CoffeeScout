@@ -47,14 +47,14 @@ CoffeeScout allows users not only to browse this data, but also to **rate coffee
 
 ## How to Run
 
-### 1. Clone or download the project
+### 1. Get the project files
 
 If the project is on GitHub:
 ```bash
 git clone https://github.com/Kitykessa/CoffeeScout.git
 cd coffeescout
 ```
-Or download the project files and unzip them.
+Or download the project as a ZIP archive and extract it.
 
 ### 2. Create a virtual environment (recommended)
 
@@ -71,7 +71,7 @@ pip install -r requirements.txt
 
 ### 4. Prepare the database
 
-The coffee data is stored in an Excel file (coffee.xlsx).
+The initial coffee data is stored in an Excel file (coffee.xlsx).
 
 > 1. Convert Excel data to JSON:
 >```bash
@@ -81,7 +81,7 @@ The coffee data is stored in an Excel file (coffee.xlsx).
 >```bash
 >python init_db.py
 >```
-This will create coffee.db and populate it with coffee data and sample users.
+This will create the coffee.db file and populate it with coffee data.
 
 ### 5. Run the application
 ```bash
@@ -92,3 +92,27 @@ flask run
 ```bash
 http://127.0.0.1:5000/
 ```
+
+---
+
+## Sample Users
+
+The database is initialized with sample users for testing purposes:
+
+- **Username:** admin  
+  **Password:** adminpass  
+
+- **Username:** user1  
+  **Password:** coffee123  
+
+These users can be used to explore reviews, ratings, and profile functionality.
+
+---
+
+## Future Improvements
+
+- Add pagination for large coffee lists
+- Allow users to upload their own coffee photos
+- Add favorite coffees feature
+- Improve review analytics and visual charts
+- Expand the database with more local stores and coffee brands
