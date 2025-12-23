@@ -1,6 +1,6 @@
 # CoffeeScout
 
-#### Video Demo:  <URL HERE>
+#### Video Demo:  https://youtu.be/jFi8fiiFmEA
 
 #### Description:
 **CoffeeScout** is a web application created as the final project for the **CS50 course**.
